@@ -11,8 +11,9 @@ DEBIAN_FRONTEND="noninteractive"
 DBNAME="moodle"
 DBUSER="moodle_user"
 DBPASSWD="network"
+
 #Fichier sql à injecter (présent dans un sous répertoire)
-DBFILE="files/creation_bdd.sql"
+DBFILE="files/creation_db_rdv.sql"
 
 echo "START - install MariaDB - "$IP
 
@@ -31,7 +32,10 @@ if [ -n "$DBNAME" ] && [ -n "$DBUSER" ] && [ -n "$DBPASSWD" ] ;then
   >> $LOG_FILE 2>&1
 fi
 
-echo "=> [3]: Configuration de BDD"
+echo "=> [3]: Database remote access configuration"
+#https://tech.saigonist.com/b/server/how-remotely-connect-mysql-database-running-vagrant-box.html
+
+echo "=> [4]: Configuration de BDD"
 if [ -f "$DBFILE" ] ;then
   mysql < /vagrant/$DBFILE \
   >> $LOG_FILE 2>&1

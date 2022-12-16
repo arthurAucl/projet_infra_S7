@@ -44,7 +44,7 @@ sed -e "s|cfg\['blowfish_secret'\] = ''|cfg['blowfish_secret'] = '$randomBlowfis
   > ${WWW_REP}/myadmin/config.inc.php
 
 mysql -e "CREATE DATABASE phpmyadmin"
-mysql -e "GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'gpi2'@'localhost' IDENTIFIED BY 'network'"
+mysql -e "GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'pmapass'"
 mysql < ${WWW_REP}/myadmin/sql/create_tables.sql 
 
 echo "[4] Restarting Apache..."
