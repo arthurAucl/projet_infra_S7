@@ -2,48 +2,41 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  #Server web
-  config.vm.define "srv-web" do |machine|
 
-    machine.vm.hostname = "srv-web"
+  config.vm.define "web-srv" do |machine|
     machine.vm.box = "chavinje/fr-bull-64"
+    machine.vm.hostname = "web-srv"
     machine.vm.network :private_network, ip: "192.168.56.80"
 
     machine.vm.provider :virtualbox do |v|
-      v.customize ["modifyvm", :id, "--name", "srv-web"]
-      v.customize ["modifyvm", :id, "--groups", "/projet_ld_css"]
+      v.customize ["modifyvm", :id, "--name", "web-srv"]
+      v.customize ["modifyvm", :id, "--groups", "/projet_S7"]
       v.customize ["modifyvm", :id, "--cpus", "1"]
       v.customize ["modifyvm", :id, "--memory", 1024]
-      v.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
-      v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
     end
-    config.vm.provision "shell", inline: <<-SHELL
-      sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config    
-      sleep 3
-      service ssh restart
-    SHELL
-    machine.vm.provision "shell", path: "scripts/install_sys.sh"
-    machine.vm.provision "shell", path: "scripts/install_web.sh"
-    machine.vm.provision "shell", path: "scripts/install_bdd.sh"
-    machine.vm.provision "shell", path: "scripts/install_moodle.sh"
-    machine.vm.provision "shell", path: "scripts/install_myadmin.sh"
+    machine.vm.provision "shell", path: "script/install_sys.sh"
+    machine.vm.provision "shell", path: "script/install_web.sh"
+    machine.vm.synced_folder "./data/www/" , "/var/www/html/", create: true
   end
 
-  #Server data base
-  config.vm.define "srv-database" do |machine|
-    machine.vm.hostname = "srv-database"
+  config.vm.define "db-srv" do |machine|
     machine.vm.box = "chavinje/fr-bull-64"
+    machine.vm.hostname = "db-srv"
     machine.vm.network :private_network, ip: "192.168.56.81"
 
     machine.vm.provider :virtualbox do |v|
-      v.customize ["modifyvm", :id, "--name", "srv-database"]
-      v.customize ["modifyvm", :id, "--groups", "/projet_ld_css"]
+      v.customize ["modifyvm", :id, "--name", "db-srv"]
+      v.customize ["modifyvm", :id, "--groups", "/projet_S7"]
       v.customize ["modifyvm", :id, "--cpus", "1"]
       v.customize ["modifyvm", :id, "--memory", 1024]
-      v.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
-      v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
     end
-  end
+    machine.vm.provision "shell", path: "script/install_sys.sh"
+    machine.vm.provision "shell", path: "script/install_db.sh"
+
+    machine.vm.provision "shell", inline: "cp /vagrant/data/config/mariadb-server/my.cnf /etc/mysql/my.cnf"
+    machine.vm.provision "shell", inline: "cp /vagrant/data/config/mariadb-server/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf"
+    
+    machine.vm.provision "shell", inline: "systemctl restart mariadb"
+    machine.vm.provision "shell", path: "script/create_db.sh"
+  end 
 end
-
-
