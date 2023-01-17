@@ -1,82 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Exemple</title>
-</head>
-<body>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="menu.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
-<?php
-$host = '192.168.56.81';
-$user = 'css';
-$password = 'csspass';
-$dbname = 'RDV_DATABASE';
+    <header>
+        <div class="en-tête">
+            <img src="Logo ESEO png.png">
+        </div>
+    </header>
 
-// Create connection
-$conn = mysqli_connect($host, $user, $password, $dbname);
+    <!-- IF NOT CONNECTED -->
+    <body>
+        <div class="container">
+            <a class="btn btn-primary btn-lg" href="rendezvous.php"><b> Gérer mes rendez-vous </b></a>
+            <a class="btn btn-primary btn-lg" href="emprunt.php"><b> Gérer mes emprunts </b></a>
+        </div>
+    </body>
 
-// Check connection
-if (!$conn) {
-   die("Connection failed: " . mysqli_connect_error());
-}
-
-$sql = "SELECT * FROM salle";
-$result = mysqli_query($conn, $sql);
-
-if (mysqli_num_rows($result) > 0) {
-   // output data of each row
-   echo "Table : Salle <br>";
-   while($row = mysqli_fetch_assoc($result)) {
-      //echo "id: " . $row["id"]. " - Entry: " . $row["entry"]. "<br>";
-      echo "id: " . $row["id"]. " - Nom de la salle: " . $row["nom"]. " - Batiment: " . $row["batiment"]. " - Numero: " . $row["numero"]. " - Disponible: " . $row["disponible"]."<br>";
-      
-   }
-} else {
-   echo "0 results";
-}
-
-$sql = "SELECT * FROM utilisateurs";
-$result = mysqli_query($conn, $sql); 
- 
-if (mysqli_num_rows($result) > 0) {
-   // output data of each row
-   echo "<br> Table : Utilisateurs <br>";
-   while($row = mysqli_fetch_assoc($result)) {
-      echo "id: " . $row["id"]. " - Nom: " . $row["nom"]. " - Prenom: " . $row["prenom"]. " - Email: " . $row["email"].  " - Mot de passe: " . $row["motDePasse"].  " - Situation: " . $row["etat"]."<br>";
-   }
-} else {
-   echo "0 results";
-}
-
-$sql = "SELECT * FROM materiels";
-$result = mysqli_query($conn, $sql); 
- 
-if (mysqli_num_rows($result) > 0) {
-   // output data of each row
-   echo "<br> Table : Materiels <br>";
-   while($row = mysqli_fetch_assoc($result)) {
-      echo "id: " . $row["id"]. " - nomDuMateriel: " . $row["nomDuMateriel"]. " - photo: " . $row["photo"]. " - prix: " . $row["prix"]. " - qualite: " . $row["qualite"].  " - disponible: " . $row["disponible"]."<br>";
-   }
-} else {
-   echo "0 results";
-}
-
-$sql = "SELECT * FROM rdv";
-$result = mysqli_query($conn, $sql); 
- 
-if (mysqli_num_rows($result) > 0) {
-   // output data of each row
-   echo "<br> Table : Rendez-vous <br>";
-   while($row = mysqli_fetch_assoc($result)) {
-      echo "id: " . $row["id"]. " - date: " . $row["date"]. " - durée: " . $row["duree"]. " - description: " . $row["description"]. " - etat: " . $row["etat"].  " - salle: " . $row["salle"]."<br>";
-   }
-} else {
-   echo "0 results";
-}
-
-mysqli_close($conn);
-?>
-
-
-</body>
+    <footer>
+        <div class="bottom">
+            <p class="sign"> Site réalisé par ADAMCZUK Etienne, AUCLAIR Arthur, BAFFOU Augustin
+                BAHLOUL Ismaïl, LHOMMEDET Constance, MIGNOT Sixtine
+            </p>
+        </div>
+        <div class="rights">
+            <p class="rights">® All rights reserved </p>
+        </div>
+    </footer>
 
 </html>
