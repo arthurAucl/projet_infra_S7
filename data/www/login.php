@@ -1,25 +1,16 @@
 <?php
 
+include 'core.php';
+
+if(isset($_SESSION['logged_in'])){ 
+    header('Location: index.php');
+} 
+
 // Vérifier si le formulaire a été soumis
 if (isset($_POST['submit'])) {
     // Récupérer les données du formulaire
     $email = $_POST['emailNom'] . $_POST['emailDomaine'];
     $motDePasse = $_POST['motDePasse'];
-
-    // Connecter à la base de données
-    $infoBdd = [
-        "server" => "192.168.56.81",
-        "login" => "css",
-        "password" => "csspass",
-        "db_name" => "RDV_DATABASE",
-    ];
-    
-    $db = new mysqli(
-        $infoBdd["server"],
-        $infoBdd["login"],
-        $infoBdd["password"],
-        $infoBdd["db_name"]
-    );
 
     //$db = new mysqli('host', 'username', 'password', 'database_name');
 
@@ -51,15 +42,8 @@ if (isset($_POST['submit'])) {
     <header>
         <div class="en-tête">
             <img src="Logo ESEO png.png">
-            <h1><?php echo $_INFO ?></h1>
         </div>
     </header>
-
-<?php if($_SESSION['logged_in'] == true){ ?>
-
-<p>Connecté</p>
-
-<?php } else { ?>
 
     <body>
         <div class="container">            
@@ -91,8 +75,6 @@ if (isset($_POST['submit'])) {
             </form>
         </div>
     </body>
-
-<?php } ?>
 
 <footer>
         <div class="bottom">

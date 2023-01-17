@@ -1,3 +1,7 @@
+<?php
+include "core.php";
+?>
+
 <!DOCTYPE html>
 <html>
     <meta charset="utf-8">

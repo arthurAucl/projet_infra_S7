@@ -12,21 +12,28 @@ $infoBdd = [
     "db_name" => "RDV_DATABASE",
 ];
 
-$mysqli = new mysqli(
+$db = new mysqli(
     $infoBdd["server"],
     $infoBdd["login"],
     $infoBdd["password"],
     $infoBdd["db_name"]
 );
 
-if ($mysqli->connect_errno) {
+if ($db->connect_errno) {
     exit("Problème de connexion à la BDD");
 }
 
-
-if (!empty($_GET["logout"])) {
-    unset($_SESSION["compte"]);
-    header("Location: ./");
+$current_file = basename($_SERVER['PHP_SELF']);
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    if ($current_file != 'login.php') {
+        header("Location: login.php");
+        exit;
+    }
 }
 
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: login.php");
+    exit;
+}
 ?>

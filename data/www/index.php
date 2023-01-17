@@ -1,3 +1,7 @@
+<?php
+include "core.php";
+?>
+
 <!DOCTYPE html>
 <html>
     <meta charset="utf-8">
@@ -16,6 +20,7 @@
         <div class="container">
             <a class="btn btn-primary btn-lg" href="rendezvous.php"><b> Gérer mes rendez-vous </b></a>
             <a class="btn btn-primary btn-lg" href="emprunt.php"><b> Gérer mes emprunts </b></a>
+            <a class="btn btn-secondary btn-lg" href="?logout"><b> Déconnexion </b></a>
         </div>
     </body>
 
