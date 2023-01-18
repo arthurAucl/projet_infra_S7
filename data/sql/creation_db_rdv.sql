@@ -5,7 +5,7 @@ USE RDV_DATABASE;
 
 CREATE TABLE IF NOT EXISTS materiels (
     id INTEGER NOT NULL AUTO_INCREMENT,
-    nomDuMateriel VARCHAR(255) NOT NULL,
+    nomdumateriel VARCHAR(255) NOT NULL,
     photo VARCHAR(255) NOT NULL,
     prix REAL NOT NULL,
     qualite ENUM ('NEUF', 'BONNE QUALITE', 'MAUVAISE QUALITE', 'INUTILISABLE') NOT NULL,    
@@ -75,7 +75,7 @@ INSERT INTO utilisateurs (nom, prenom, email, motdepasse, etat) VALUES
 ( 'Rousseau', 'Sophie', 'sophie.rousseau@reseau.eseo.fr', 'network', 'PROFESSEUR_ADMINISTRATEUR'),
 ( 'Chavin', 'Jerome', 'jerome.chavin@eseo.fr', 'network','PROFESSEUR');
 
-INSERT INTO materiels (nomDuMateriel, photo, prix, qualite)  VALUES
+INSERT INTO materiels (nomdumateriel, photo, prix, qualite)  VALUES
 ('cable HDMI', 'HDMI', 20.23,'BONNE QUALITE');
 
 INSERT INTO emprunt (utilisateurs, materiels, dateattribution, daterestitution) VALUES
