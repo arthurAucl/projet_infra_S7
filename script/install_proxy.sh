@@ -11,6 +11,7 @@ echo "
     ProxyPreserveHost On
     ProxyPass / http://192.168.56.81:80/
     ProxyPassReverse / http://192.168.56.81:80/
+    ProxyPassReverse / http://192.168.56.82:80/
 </VirtualHost>
 " > /etc/apache2/sites-available/example.com.conf
 
