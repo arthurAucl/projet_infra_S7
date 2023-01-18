@@ -68,6 +68,24 @@ Vagrant.configure("2") do |config|
     machine.vm.provision "shell", path: "script/create_db.sh"
   end 
 
+  config.vm.define "proxy-srv" do |machine|
+    machine.vm.box = "chavinje/fr-bull-64"
+    machine.vm.hostname = "proxy-srv"
+    machine.vm.network :private_network, ip: "192.168.56.80"
+
+    machine.vm.provider :virtualbox do |v|
+      v.customize ["modifyvm", :id, "--name", "proxy-srv"]
+      v.customize ["modifyvm", :id, "--groups", "/projet_S7"]
+      v.customize ["modifyvm", :id, "--cpus", "1"]
+      v.customize ["modifyvm", :id, "--memory", 1024]
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+
+    end
+    machine.vm.provision "shell", path: "script/install_sys.sh"
+    machine.vm.provision "shell", path: "script/install_proxy.sh"
+  end 
+
   config.vm.define "backup-srv" do |machine|
     machine.vm.box = "chavinje/fr-bull-64"
     machine.vm.hostname = "backup-srv"
