@@ -1,48 +1,30 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-#  # Number of VMs to create
-#  num_of_vms = 2
-#  # Loop through and create the VMs
-#  for i in 1..num_of_vms do
-#    config.vm.define "web-srv-#{i}" do |machine|
-#      machine.vm.box = "chavinje/fr-bull-64"
-#      machine.vm.hostname = "web-srv-#{i}"
-#      machine.vm.network :private_network, ip: "192.168.56.#{i+79}"
-#
-#      machine.vm.provider :virtualbox do |v|
-#        v.customize ["modifyvm", :id, "--name", "web-srv-#{i}"]
-#        v.customize ["modifyvm", :id, "--groups", "/projet_S7"]
-#        v.customize ["modifyvm", :id, "--cpus", "1"]
-#        v.customize ["modifyvm", :id, "--memory", 1024]
-#        v.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
-#        v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
-#      end
-#      machine.vm.provision "shell", path: "script/install_sys.sh"
-#      machine.vm.provision "shell", path: "script/install_web.sh"
-#      
-#      machine.vm.synced_folder "./data/www/" , "/var/www/html/", create: true
-#    end
-#  end
+
+num_of_vms = 2
 info_ip_executed = false 
 
 Vagrant.configure("2") do |config|
-  config.vm.define "web-srv" do |machine|
-    machine.vm.box = "chavinje/fr-bull-64"
-    machine.vm.hostname = "web-srv"
-    machine.vm.network :private_network, ip: "192.168.56.81"
+  
+  (1..num_of_vms).each do |i|
+    config.vm.define "web-srv-#{i}" do |machine|
+      machine.vm.box = "chavinje/fr-bull-64"
+      machine.vm.hostname = "web-srv-#{i}"
+      machine.vm.network :private_network, ip: "192.168.56.#{i+80}"
 
-    machine.vm.provider :virtualbox do |v|
-      v.customize ["modifyvm", :id, "--name", "web-srv"]
-      v.customize ["modifyvm", :id, "--groups", "/projet_S7"]
-      v.customize ["modifyvm", :id, "--cpus", "1"]
-      v.customize ["modifyvm", :id, "--memory", 1024]
-      v.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
-      v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+      machine.vm.provider :virtualbox do |v|
+        v.customize ["modifyvm", :id, "--name", "web-srv-#{i}"]
+        v.customize ["modifyvm", :id, "--groups", "/projet_S7"]
+        v.customize ["modifyvm", :id, "--cpus", "1"]
+        v.customize ["modifyvm", :id, "--memory", 1024]
+        v.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+        v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+      end
+      machine.vm.provision "shell", path: "script/install_sys.sh"
+      machine.vm.provision "shell", path: "script/install_web.sh"
+      
+      machine.vm.synced_folder "./data/www/" , "/var/www/html/", create: true
     end
-    machine.vm.provision "shell", path: "script/install_sys.sh"
-    machine.vm.provision "shell", path: "script/install_web.sh"
-    
-    machine.vm.synced_folder "./data/www/" , "/var/www/html/", create: true
   end
 
   config.vm.define "db-srv" do |machine|
