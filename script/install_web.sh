@@ -21,7 +21,6 @@ apt-get install $APT_OPT \
     php-zip \
     php-mbstring \
     php-mysqli \
-    mariadb-client \
     >> $LOG_FILE 2>&1
 
 echo "Restarting Apache..."

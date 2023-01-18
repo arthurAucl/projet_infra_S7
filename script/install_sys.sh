@@ -41,10 +41,10 @@ echo "=> [3]: Ajout utilisateur"
 # ajout utilisateur et autres
 if [ -n "$NOM" ] ;then
   mkdir -p $HDIR
-  adduser --home $HDIR --disabled-password --no-create-home $NOM
+  adduser --home $HDIR --disabled-password --no-create-home $NOM >> $LOG_FILE 2>&1
   echo $NOM:$MDP | chpasswd
-  chown $NOM $HDIR
-  chmod 755 $HDIR
+  chown $NOM $HDIR >> $LOG_FILE 2>&1
+  chmod 755 $HDIR >> $LOG_FILE 2>&1
 fi
 
 echo "END - Install Base System on "$IP
