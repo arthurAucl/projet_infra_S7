@@ -6,7 +6,7 @@ ini_set("display_startup_errors", "On");
 
 
 $infoBdd = [
-    "server" => "192.168.56.81",
+    "server" => "192.168.56.84",
     "login" => "css",
     "password" => "csspass",
     "db_name" => "RDV_DATABASE",
