@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS materiels (
     photo VARCHAR(255) NOT NULL,
     prix REAL NOT NULL,
     qualite ENUM ('NEUF', 'BONNE QUALITE', 'MAUVAISE QUALITE', 'INUTILISABLE') NOT NULL,    
-    disponible BOOLEAN NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -18,7 +17,6 @@ CREATE TABLE IF NOT EXISTS salle (
     nom VARCHAR(255) NOT NULL,
     batiment ENUM('A', 'B','C','D') NOT NULL,
     numero INT NOT NULL,
-    disponible BOOLEAN NOT NULL,
     PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
@@ -27,8 +25,8 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
     nom VARCHAR(255) NOT NULL,
     prenom VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    motDePasse VARCHAR(255) NOT NULL,
-    etat ENUM('ETUDIANT', 'PROFESSEUR', 'PROFESSEUR-ADMINISTRATEUR'),
+    motdepasse VARCHAR(255) NOT NULL,
+    etat ENUM('ETUDIANT', 'PROFESSEUR', 'ADMINISTRATEUR', 'PROFESSEUR_ADMINISTRATEUR'),
     PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
@@ -56,30 +54,31 @@ CREATE TABLE IF NOT EXISTS acours(
 
 
 CREATE TABLE IF NOT EXISTS emprunt(
-    dateAttribution DATETIME NOT NULL, 
-    dateRestitution DATETIME NOT NULL, 
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    dateattribution DATETIME NOT NULL, 
+    daterestitution DATETIME NOT NULL, 
     utilisateurs INTEGER NOT NULL,
     materiels INTEGER NOT NULL, 
-    PRIMARY KEY(utilisateurs, materiels), 
+    PRIMARY KEY(id), 
     FOREIGN KEY(utilisateurs) REFERENCES utilisateurs(id), 
     FOREIGN KEY(materiels) REFERENCES materiels(id)
 )ENGINE=InnoDB;
 
-INSERT INTO salle (nom, batiment, numero, disponible) VALUES
-('Monge', 'A', 555, TRUE),
-('Tesla', 'A', 555, TRUE),
-('Bode', 'A', 5, FALSE),
-('Newton', 'A', 555, TRUE);
+INSERT INTO salle (nom, batiment, numero) VALUES
+('Monge', 'A', 555),
+('Tesla', 'A', 555),
+('Bode', 'A', 5),
+('Newton', 'A', 555);
 
-INSERT INTO utilisateurs (nom, prenom, email, motDePasse, etat) VALUES
+INSERT INTO utilisateurs (nom, prenom, email, motdepasse, etat) VALUES
 ( 'Bahloul', 'Ismail', 'ismail.bahloul@reseau.eseo.fr', 'network', 'ETUDIANT'),
-( 'Rousseau', 'Sophie', 'sophie.rousseau@reseau.eseo.fr', 'network', 'PROFESSEUR-ADMINISTRATEUR'),
+( 'Rousseau', 'Sophie', 'sophie.rousseau@reseau.eseo.fr', 'network', 'PROFESSEUR_ADMINISTRATEUR'),
 ( 'Chavin', 'Jerome', 'jerome.chavin@eseo.fr', 'network','PROFESSEUR');
 
-INSERT INTO materiels (nomDuMateriel, photo, prix, qualite,disponible)  VALUES
-('cable HDMI', 'HDMI', 20.23,'BONNE QUALITE', TRUE);
+INSERT INTO materiels (nomDuMateriel, photo, prix, qualite)  VALUES
+('cable HDMI', 'HDMI', 20.23,'BONNE QUALITE');
 
-INSERT INTO emprunt (utilisateurs, materiels, dateAttribution, dateRestitution) VALUES
+INSERT INTO emprunt (utilisateurs, materiels, dateattribution, daterestitution) VALUES
 (1,1,'2023-01-17', '2023-01-17');
 
 INSERT INTO rdv (date, duree, description, etat, salle) VALUES
