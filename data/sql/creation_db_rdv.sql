@@ -76,7 +76,7 @@ INSERT INTO utilisateurs (nom, prenom, email, motdepasse, etat) VALUES
 ( 'Chavin', 'Jerome', 'jerome.chavin@eseo.fr', 'network','PROFESSEUR');
 
 INSERT INTO materiels (nomdumateriel, photo, prix, qualite)  VALUES
-('cable HDMI', 'HDMI', 20.23,'BONNE QUALITE');
+('cable HDMI', 'HDMI', 20.23,'BONNE_QUALITE');
 
 INSERT INTO emprunt (utilisateurs, materiels, dateattribution, daterestitution) VALUES
 (1,1,'2023-01-17', '2023-01-17');
