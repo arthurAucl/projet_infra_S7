@@ -1,5 +1,3 @@
-
-
 echo "Create DB" 
 
 mysql -e "CREATE USER IF NOT EXISTS 'css'@'localhost' IDENTIFIED BY 'csspass'";
