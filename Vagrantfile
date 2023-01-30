@@ -66,7 +66,7 @@ Vagrant.configure("2") do |config|
     end
     machine.vm.provision "shell", path: "script/install_sys.sh"
     machine.vm.provision "shell", path: "script/install_proxy.sh"
-    #machine.vm.provision "shell", path: "script/ssl_setup.sh", privileged: false, args: "rendezvous.eseo.com.crt rendezvous.eseo.com.key"
+    machine.vm.provision "shell", path: "script/ssl_setup.sh", privileged: false, args: "rendezvous.eseo.com.crt rendezvous.eseo.com.key"
   end 
 
   config.vm.define "backup-srv" do |machine|

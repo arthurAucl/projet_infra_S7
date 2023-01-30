@@ -1,59 +1,82 @@
-# Projet Infrastructure et Logiciels
+# Infrastructure project
 
-Les fichiers pour la mise en place du projet Infrastructure et Logiciels su semestre 7
-
-## Les pré-requis
-
-### Les ressources informatiques
-
-Pour faire fonctionner ce Labs il faut prévoir au moins 2 CPU /coeurs et 4Go de Ram (8Go est plus judicieux). L'espace disque est de l'ordre des 16 Go.
-La virtualisation doit être activée sur le PC hôte (machine physique ) 
-https://support.bluestacks.com/hc/fr-fr/articles/115003174386-Comment-puis-je-activer-la-virtualisation-VT-sur-mon-PC-
-
-### Les applications obligatoires
+## Pre-requisits
 
 * Oracle Virtualbox (version 6.1) (<https://www.virtualbox.org/wiki/Downloads>)
-* Oracle VM VirtualBox Extension Pack (adapté à la version de virtualbox installée précédement)
+* Oracle VM VirtualBox Extension Pack 
 * HashiCorp Vagrant (<https://www.vagrantup.com/>)
 
-### Les fichiers obligatoires
 
-* choisir le zip en haut à gauche
-* cloner avec git : git clone https://github.com/chavinje/S7-projet-il.git
+### Download files 
 
-Vous trouverez les reperoires/fichiers :
+#### Devops work
+* Download the ops branch
 
-* ./Vagrantfile : qui contient l'ensemble des déclarations pour la construction du Labs
-* scripts/install_sys.sh : mise en place des configurations de base sur toutes les VMs
-* scripts/install_bdd.sh : Mise en place de la base de données mysql 
-* scripts/install_moodle.sh : Mise en place de l'application Moodle 
-* scripts/install_myadmin.sh : Mise en place de l'application PhpMyAdmin 
-* scripts/install_web.sh : Mise en place du serveur Apache2 
+```bash
+cd /home/user/project
+git clone https://github.com/arthurAucl/projet_infra_S7.git
+git checkout origin/ops
+```
 
+#### Devops + developper work
+```bash
+cd /home/user/project
+git clone https://github.com/arthurAucl/projet_infra_S7.git
+```
 
-## Description du Labs
+## Description 
 
-Le labs est constitué de 1 machine virtuelle Virtualbox basé sur la box fr-bull-64
-Cette machine est reliée à votre machine réelle par un réseau privé hôte via l'adresse 192.168.56.80
+This infrastructure consists in : 
+* 2 virtual machines that are dedicated to web serving. 
+* 1 virtual machine for the proxy, which distributes http requests on both web machines. 
+* 1 virtual machine as a database server
+* 1  virtual machine for the database backups
 
-* L'application Moodle est accéssible par l'adresse http://192.168.56.80/moodle
-* L'application PhpMyAdmin est accéssible par l'adresse http://192.168.56.80/myadmin
+* Proxy : http://192.168.56.80/
+* Web Server : http://192.168.56.81/ and http://192.168.56.82/
+* Database : IP 192.168.56.84 
+* Backup : IP 192.168.56.85
 
-## Utilisation des commandes vagrant
+## How to use this system 
 
-Télécharger la box modèle
-    ```vagrant box add chavinje/fr-bull-64```
+* Startup system : 
 
-Activer une VM uniquement (srv-web par exemple)
-    ```vagrant up srv-web```
+```bash
+cd /home/user/project
+vagrant up
+```
 
-Se connecter à une VM (firewall par exemple)
-    ```vagrant ssh firewall```
+* Shutdown system
 
-Arréter une VM (victime par exemple)
-    ```vagrant halt victime```
+```bash
+cd /home/user/project
+vagrant halt
+```
 
-Détruire toutes les VMs (sans demande de confirmation)
-    ```vagrant destroy -f```
-# projet_infra_S7
-# projet_infra_S7
+* Destroy the system 
+
+```bash
+cd /home/user/project
+vagrant destroy
+```
+
+## How to test the system is working in ops branch
+
+```bash
+cd /home/user/project
+vagrant up
+
+# Test database is properly installed
+# Go on 192.168.56.80, 192.168.56.81 or 192.168.56.82
+# You will see the data base. 
+```
+### Change the database and check it again
+```bash
+cd /home/user/project
+vagrant ssh db-srv
+mysql -h 192.168.56.84 -u css -pcsspass RDV_DATABASE
+```
+```sql
+INSERT INTO utilisateurs (nom, prenom, email, motdepasse, etat) VALUES ( 'Lastname', 'Fisrtname', 'Fisrtname.Lastname@reseau.eseo.fr', 'network', 'ETUDIANT');
+```
+Now you can check again IP 192.168.56.80

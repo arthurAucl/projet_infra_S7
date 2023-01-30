@@ -12,8 +12,7 @@ echo "
 <VirtualHost *:80>
     <Proxy balancer://mycluster>
       BalancerMember http://192.168.56.81:80
-      BalancerMember http://192.168.56.82:80
-      BalancerMember http://192.168.56.84:80
+      BalancerMember http://192.168.56.82:80 
     </Proxy>
     ProxyPreserveHost On
     ProxyPass / balancer://mycluster/
