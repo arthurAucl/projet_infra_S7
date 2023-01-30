@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS rdv (
     date DATETIME NOT NULL,
     duree REAL NOT NULL,
     description VARCHAR(255) NOT NULL,
-    etat ENUM ('ACCEPTE', 'REFUSE'),
+    etat ENUM ('ACCEPTE', 'REFUSE', 'EN ATTENTE'),
     salle INTEGER NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (salle) REFERENCES salle(id)
@@ -85,4 +85,5 @@ INSERT INTO rdv (date, duree, description, etat, salle) VALUES
 ('2023-01-17', 20,'Besoin de te voir pour la correction', 'ACCEPTE', 1);
 
 INSERT INTO acours (utilisateurs, rdv) VALUES
-(1,1);
+(1,1),
+(2,1);
